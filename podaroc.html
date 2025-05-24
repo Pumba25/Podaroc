@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Твой подарок!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+        .container { text-align: center; }
+        .btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            background: #fff;
+            color: #ff6b6b;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .btn:active { transform: scale(0.95); }
+        .gif-container, .certificate {
+            display: none;
+            max-width: 90%;
+            max-height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="btn" id="giftBtn">Получить подарок</button>
+        <div class="gif-container" id="gifContainer">
+            <img src="https://media0.giphy.com/media/DleeOCLyMuDVO7WmPk/giphy.gif" alt="Подарок!">
+        </div>
+        <img class="certificate" id="certificate" src="https://psv4.userapi.com/s/v1/d/x-2HqrtLBY8pZQKwJj1Rb88z8nIr0lZnRrENoriq2stLC7N0rCJg5kGIigs7pv56PS9LbF5J0fLBXqLaX4woHsAHWG_VYJLDWtbJ7eslEir_Z2c2VX91Qw/podarochny_sertifikat.png" alt="Подарочный сертификат">
+    </div>
+
+    <audio id="music" src="https://drive.google.com/uc?export=download&id=1ZNG6chxd4KbAXCZ_QiZVuPEfdyFeBAPg"></audio>
+
+    <script>
+        const giftBtn = document.getElementById('giftBtn');
+        const gifContainer = document.getElementById('gifContainer');
+        const certificate = document.getElementById('certificate');
+        const music = document.getElementById('music');
+
+        giftBtn.addEventListener('click', () => {
+            giftBtn.style.display = 'none';
+            gifContainer.style.display = 'block';
+            music.play();
+            setTimeout(() => document.addEventListener('click', openCertificate), 3000);
+        });
+
+        function openCertificate() {
+            gifContainer.style.display = 'none';
+            certificate.style.display = 'block';
+            document.addEventListener('click', () => {
+                certificate.style.display = 'none';
+                giftBtn.style.display = 'block';
+                music.pause();
+                music.currentTime = 0;
+            }, { once: true });
+        }
+    </script>
+</body>
+</html>
