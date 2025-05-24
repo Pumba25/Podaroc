@@ -53,28 +53,36 @@
 </audio>
 
     <script>
-        const giftBtn = document.getElementById('giftBtn');
-        const gifContainer = document.getElementById('gifContainer');
-        const certificate = document.getElementById('certificate');
-        const music = document.getElementById('music');
+      const giftBtn = document.getElementById('giftBtn');
+const gifContainer = document.getElementById('gifContainer');
+const certificate = document.getElementById('certificate');
+const music = document.getElementById('music');
 
-        giftBtn.addEventListener('click', () => {
-            giftBtn.style.display = 'none';
-            gifContainer.style.display = 'block';
-            music.play();
-            setTimeout(() => document.addEventListener('click', openCertificate), 3000);
-        });
+// 1. Ручной запуск музыки по клику (чтобы обойти блокировку браузера)
+giftBtn.addEventListener('click', () => {
+  // Пробуем запустить музыку
+  music.play().catch(e => console.log("Ошибка воспроизведения:", e));
+  
+  // Прячем кнопку и показываем гифку
+  giftBtn.style.display = 'none';
+  gifContainer.style.display = 'block';
 
-        function openCertificate() {
-            gifContainer.style.display = 'none';
-            certificate.style.display = 'block';
-            document.addEventListener('click', () => {
-                certificate.style.display = 'none';
-                giftBtn.style.display = 'block';
-                music.pause();
-                music.currentTime = 0;
-            }, { once: true });
-        }
+  // Через 3 секунды разрешаем открыть сертификат
+  setTimeout(() => {
+    document.addEventListener('click', openCertificate);
+  }, 3000);
+});
+
+function openCertificate() {
+  gifContainer.style.display = 'none';
+  certificate.style.display = 'block';
+  document.addEventListener('click', () => {
+    certificate.style.display = 'none';
+    giftBtn.style.display = 'block';
+    music.pause();
+    music.currentTime = 0;
+  }, { once: true });
+}
     </script>
 </body>
 </html>
